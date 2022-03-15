@@ -6,6 +6,9 @@
 </head>
 <body>
 
+<div th:include="fragments/main-fragments::login"></div>
+
+
 <div>
 <a href="/items/add">Add Item</a>
     <a th:each="item: ${items}" th:href="@{'/items/' + ${item.id}}">

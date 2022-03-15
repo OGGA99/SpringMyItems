@@ -22,13 +22,15 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .csrf().disable()
-                .formLogin().and()
+                .formLogin()
+                .and().logout()
+                .logoutSuccessUrl("/")
+                .and()
                 .authorizeHttpRequests()
                 .antMatchers(HttpMethod.GET,"/").permitAll()
                 .antMatchers(HttpMethod.GET,"/addUser").permitAll()
                 .antMatchers(HttpMethod.POST,"/addUser").permitAll()
-                .antMatchers("/items/add").hasAnyRole(Role.USER.name())
-                .antMatchers("/items/add").hasAnyRole(Role.ADMIN.name())
+                .antMatchers("/items/add").hasAnyAuthority(Role.USER.name(),Role.ADMIN.name())
                 .antMatchers("/deleteUser/{id}").hasAnyRole(Role.ADMIN.name())
                 .anyRequest().authenticated();
 
